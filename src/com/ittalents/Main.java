@@ -5,6 +5,7 @@ import java.lang.reflect.Array;
 import java.sql.SQLSyntaxErrorException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.spi.AbstractResourceBundleProvider;
 
 public class Main {
@@ -971,123 +972,122 @@ public class Main {
         if (step == 1) {
             return number;
         }
-        return powerNumberWithRec(number, --step)+multiplicationRecursion(number, number);
+        return powerNumberWithRec(number, --step) + multiplicationRecursion(number, number);
     }
 
-    private static void printMatrix(int start,int current,int max){
-        if(current>max){
+    private static void printMatrix(int start, int current, int max) {
+        if (current > max) {
             return;
         }
-        printRowRecursively(start,current);
-        printMatrix(start,current+1,max);
+        printRowRecursively(start, current);
+        printMatrix(start, current + 1, max);
     }
 
-    private static void printRowRecursively(int current, int max){
-        if(current>=max){
+    private static void printRowRecursively(int current, int max) {
+        if (current >= max) {
             System.out.print(current);
             System.out.println();
             return;
         }
-        System.out.print(current+" ");
-        printRowRecursively(current+1,max);
+        System.out.print(current + " ");
+        printRowRecursively(current + 1, max);
     }
 
-    private static void miracleNumber(int originalone, int tempnumber,int reverse){
-        if(tempnumber==0){
-            if(originalone == reverse){
-                System.out.println("The number is polydrom."+ reverse);
+    private static void miracleNumber(int originalone, int tempnumber, int reverse) {
+        if (tempnumber == 0) {
+            if (originalone == reverse) {
+                System.out.println("The number is polydrom." + reverse);
             }
             return;
         }
-        reverse = reverse * 10 + tempnumber%10;
-        miracleNumber(originalone,tempnumber/10,reverse);
+        reverse = reverse * 10 + tempnumber % 10;
+        miracleNumber(originalone, tempnumber / 10, reverse);
     }
 
 
-
-    private static void revertSentance(String str){
-        String [] arr = str.split(" ");
-        for(int i = arr.length-1; i>=0;i--){
-            System.out.print(arr[i].replace(".",""));
-            if(i!=0){
+    private static void revertSentance(String str) {
+        String[] arr = str.split(" ");
+        for (int i = arr.length - 1; i >= 0; i--) {
+            System.out.print(arr[i].replace(".", ""));
+            if (i != 0) {
                 System.out.print(" ");
             }
         }
     }
 
-    private static void checkMaxChar(String str){
-        char ch = 0,ch1 = 0;
-        int count=0,count1=0;
-        for(int i=0; i<str.length();i++){
-            for(int j=0; j<str.length();j++){
-                if(str.charAt(i)==' ') break;
-                if(str.charAt(i)==str.charAt(j)){
-                    ch=str.charAt(i);
+    private static void checkMaxChar(String str) {
+        char ch = 0, ch1 = 0;
+        int count = 0, count1 = 0;
+        for (int i = 0; i < str.length(); i++) {
+            for (int j = 0; j < str.length(); j++) {
+                if (str.charAt(i) == ' ') break;
+                if (str.charAt(i) == str.charAt(j)) {
+                    ch = str.charAt(i);
                     count++;
                 }
-                if(j==str.length()-1){
-                    if(count1<count){
-                        count1=count;
-                        ch1=ch;
+                if (j == str.length() - 1) {
+                    if (count1 < count) {
+                        count1 = count;
+                        ch1 = ch;
                     }
-                    count=0;
-                    ch=0;
+                    count = 0;
+                    ch = 0;
                 }
             }
         }
 
-        System.out.println("Max occurance is "+count1+" of character "+ ch1);
+        System.out.println("Max occurance is " + count1 + " of character " + ch1);
     }
 
-    private static void checkMinChar(String str){
-        char ch = 0,ch1 = 0;
-        int count=0,count1=Integer.MAX_VALUE;
-        for(int i=0; i<str.length();i++){
-            for(int j=0; j<str.length();j++){
-                if(str.charAt(i)==' ') break;
-                if(str.charAt(i)==str.charAt(j)){
-                    ch=str.charAt(i);
+    private static void checkMinChar(String str) {
+        char ch = 0, ch1 = 0;
+        int count = 0, count1 = Integer.MAX_VALUE;
+        for (int i = 0; i < str.length(); i++) {
+            for (int j = 0; j < str.length(); j++) {
+                if (str.charAt(i) == ' ') break;
+                if (str.charAt(i) == str.charAt(j)) {
+                    ch = str.charAt(i);
                     count++;
                 }
-                if(j==str.length()-1){
-                    if(count>0 && count1>count){
-                        count1=count;
-                        ch1=ch;
+                if (j == str.length() - 1) {
+                    if (count > 0 && count1 > count) {
+                        count1 = count;
+                        ch1 = ch;
                     }
-                    count=0;
-                    ch=0;
+                    count = 0;
+                    ch = 0;
                 }
             }
         }
 
-        System.out.println("MIN occurance is "+count1+" of character "+ ch1);
+        System.out.println("MIN occurance is " + count1 + " of character " + ch1);
     }
 
 
-    private static void findMaxElement(int arr[][],int max,int row,int column){
+    private static void findMaxElement(int arr[][], int max, int row, int column) {
 
-        if(arr[row][column]>max){
-            max=arr[row][column];
+        if (arr[row][column] > max) {
+            max = arr[row][column];
         }
 
-        if(row==arr.length-1 && column==arr[0].length-1){
+        if (row == arr.length - 1 && column == arr[0].length - 1) {
             System.out.println(max);
             return;
         }
 
-        if(column==arr[0].length-1){
-            findMaxElement(arr,max,row+1,0);
-        }else {
-            findMaxElement(arr,max,row,column+1);
+        if (column == arr[0].length - 1) {
+            findMaxElement(arr, max, row + 1, 0);
+        } else {
+            findMaxElement(arr, max, row, column + 1);
         }
     }
 
     //SELECTIONSORT
-    private static int [] selectionSort(int arr[]) {
-        for (int i = 0; i < arr.length/2; i++) {
+    private static int[] selectionSort(int arr[]) {
+        for (int i = 0; i < arr.length / 2; i++) {
             int min = arr[i], minindex = i, max = arr[i], maxIndex = i;
             boolean changemin = false, changemax = false;
-            for (int j = i + 1; j < arr.length-i; j++) {
+            for (int j = i + 1; j < arr.length - i; j++) {
                 if (min > arr[j]) {
                     changemin = true;
                     min = arr[j];
@@ -1114,19 +1114,19 @@ public class Main {
         return arr;
     }
 
-    private static int [] countingSort(int arr[]){
-        int maxElement=Integer.MIN_VALUE;
-        for (int element:arr){
-            maxElement = maxElement<element ? element : maxElement;
+    private static int[] countingSort(int arr[]) {
+        int maxElement = Integer.MIN_VALUE;
+        for (int element : arr) {
+            maxElement = maxElement < element ? element : maxElement;
         }
-        int helper [] = new int [maxElement+1];
-        for (int i=0;i<arr.length;i++){
+        int helper[] = new int[maxElement + 1];
+        for (int i = 0; i < arr.length; i++) {
             helper[arr[i]]++;
         }
-        int index=0;
-        for(int i=0;i<helper.length;i++){
-            while (helper[i]>0){
-                arr[index]=i;
+        int index = 0;
+        for (int i = 0; i < helper.length; i++) {
+            while (helper[i] > 0) {
+                arr[index] = i;
                 helper[i]--;
                 index++;
             }
@@ -1134,40 +1134,203 @@ public class Main {
         return arr;
     }
 
-    private static void binarySearch(int arr[],int number,int startposition,int endposition){
-        if(startposition>endposition){System.out.println("There is no such element.");return;}
-        int midIndex = (endposition+startposition)/2;
-        if(number==arr[midIndex]){
+    private static void binarySearch(int arr[], int number, int startposition, int endposition) {
+        if (startposition > endposition) {
+            System.out.println("There is no such element.");
+            return;
+        }
+        int midIndex = (endposition + startposition) / 2;
+        if (number == arr[midIndex]) {
             System.out.println("index " + midIndex + " value " + arr[midIndex]);
             return;
         }
-        if(number>arr[midIndex]) binarySearch(arr,number,midIndex+1,endposition);
-        else if (number<arr[midIndex]) binarySearch(arr,number,startposition,midIndex-1);
+        if (number > arr[midIndex]) binarySearch(arr, number, midIndex + 1, endposition);
+        else if (number < arr[midIndex]) binarySearch(arr, number, startposition, midIndex - 1);
     }
 
-    private static int [] quicksort(int arr[],int start, int end){
-      int pivot=arr[end],index=start;
-      for(int i=start;i<end;i++){
-          if(arr[i]<pivot){
-              int temp=arr[i];
-              arr[i]=arr[index];
-              arr[index]=temp;
-              index++;
-          }
+    private static int partition(int arr[], int start, int end) {
+        int pivot = arr[end], index = start;
+        for (int i = start; i < end; i++) {
+            if (arr[i] < pivot) {
+                int temp = arr[i];
+                arr[i] = arr[index];
+                arr[index] = temp;
+                index++;
+            }
         }
-        int temp=arr[index];
-        arr[index]=arr[end];
-        arr[end]=temp;
-        if(index==0) return arr;
-        quicksort(arr, start, index);
-        quicksort(arr, index + 1, end);
+        int temp = arr[index];
+        arr[index] = arr[end];
+        arr[end] = temp;
+        return index;
+    }
 
+    private static void quicksort(int arr[], int start, int end) {
+        if (start > end) {
+            return;
+        }
+        int index = partition(arr, start, end);
+        quicksort(arr, start, index - 1);
+        quicksort(arr, index + 1, end);
+    }
+
+    private static int[] bubblesort(int arr[]) {
+        boolean sorted = true;
+        int count = 0;
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr.length - i - 1; j++) {
+                count++;
+                if (arr[j + 1] < arr[j]) {
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                    sorted = false;
+                }
+            }
+            System.out.println(Arrays.toString(arr));
+            if (sorted == true) {
+                return arr;
+            }
+        }
+        System.out.println(count);
         return arr;
     }
 
-    public static void main(String[] args) {
-        int[] matrix1 = {10,8,7,6,5,9,11,120,130,1,4};
-        System.out.println(Arrays.toString(quicksort(matrix1,0,matrix1.length-1)));
+    private static int[] bubblesortoptimization(int arr[]) {
+        boolean issorted = false;
+        int iteration = 0;
+        while (issorted == false) {
+            issorted = true;
+            for (int j = 0; j < arr.length - iteration - 1; j++) {
+                if (arr[j + 1] < arr[j]) {
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                    issorted = false;
+                }
+            }
+            iteration++;
+        }
+        return arr;
+    }
 
+    private static int[] selectionSortCheck(int arr[]) {
+        int min = Integer.MAX_VALUE, index = 0, indexmax = 0, max = Integer.MIN_VALUE;
+        boolean swap = false, swapmax = false;
+        for (int i = 0; i < arr.length / 2; i++) {
+            for (int j = i; j < arr.length - i; j++) {
+                if (min > arr[j]) {
+                    min = arr[j];
+                    index = j;
+                    swap = true;
+                }
+                if (max < arr[j]) {
+                    max = arr[j];
+                    indexmax = j;
+                    swapmax = true;
+                }
+            }
+            if (swap) {
+                int temp = arr[i];
+                arr[i] = min;
+                arr[index] = temp;
+                index = 0;
+                min = Integer.MAX_VALUE;
+                swap = false;
+            }
+            if (swapmax) {
+                int temp = arr[(arr.length - 1) - i];
+                arr[(arr.length - 1) - i] = max;
+                arr[indexmax] = temp;
+                indexmax = arr.length - 1;
+                max = Integer.MIN_VALUE;
+                swapmax = false;
+            }
+        }
+        return arr;
+    }
+
+    private static int binarySearchCheck(int arr[], int element, int start, int end) {
+        if (start > end) {
+            System.out.println("There is no such element");
+            return -1;
+        } else if (element == arr[(((start + end) / 2))]) {
+            System.out.println("Element was found index " + (((start + end) / 2)));
+            return (start + end) / 2;
+        }
+
+        return element > arr[((start + end) / 2)] ? binarySearchCheck(arr, element, ((start + end) / 2) + 1, end) : binarySearchCheck(arr, element, 0, ((start + end) / 2) - 1);
+    }
+
+    private static int[] quickSortCheck(int[] arr, int start, int end) {
+        if (start > end) {
+            return arr;
+        }
+        int index = partitioncheck(arr, start, end);
+        quickSortCheck(arr, start, index - 1);
+        quickSortCheck(arr, index + 1, end);
+        return arr;
+    }
+
+    private static int partitioncheck(int[] arr, int start, int end) {
+        int pivot = arr[end], index = start;
+        for (int i = start; i < end; i++) {
+            if (arr[i] <= pivot) {
+                int temp = arr[i];
+                arr[i] = arr[index];
+                arr[index] = temp;
+                index++;
+            }
+        }
+        int temp = arr[index];
+        arr[index] = arr[end];
+        arr[end] = temp;
+        return index;
+    }
+
+    private static int[][] bubblesortMatrix(int arr[][], int row) {
+        if(row>arr.length-1){
+            return arr;
+        }
+        bubblesortIteration(arr,0,0);
+        bubblesortMatrix(arr,row+1);
+        return arr;
+    }
+
+    private static int[][] bubblesortIteration(int arr[][], int column, int row) {
+        if (column < arr[row].length - 1) {
+            if (row < arr.length) {
+                bubblesortRecursion(arr, column, row, column + 1, row);
+                bubblesortIteration(arr, column + 1, row);
+            }
+        } else {
+            if (row < arr.length - 1) {
+                bubblesortRecursion(arr, column, row, 0, ++row);
+                column = 0;
+                bubblesortIteration(arr, column, row);
+            }
+        }
+        return arr;
+    }
+
+    private static void bubblesortRecursion(int arr[][], int column, int row, int column2, int row2) {
+        if (arr[row][column] > arr[row2][column2]) {
+            int temp = arr[row][column];
+            arr[row][column] = arr[row2][column2];
+            arr[row2][column2] = temp;
+        }
+    }
+
+    private static void printArray(int[][] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[i].length; j++) {
+                System.out.print(arr[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    public static void main(String[] args) {
+        int[][] matrix1 = {{10, 2, 30, 4}, {5, 60, 7, 9}, {90, 10, 11, 15}};
+        printArray(bubblesortMatrix(matrix1, 0));
     }
 }
