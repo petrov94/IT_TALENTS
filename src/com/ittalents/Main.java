@@ -1,6 +1,7 @@
 package com.ittalents;
 
 import java.awt.image.AreaAveragingScaleFilter;
+import java.lang.ref.PhantomReference;
 import java.lang.reflect.Array;
 import java.sql.SQLSyntaxErrorException;
 import java.util.ArrayList;
@@ -1288,11 +1289,11 @@ public class Main {
     }
 
     private static int[][] bubblesortMatrix(int arr[][], int row) {
-        if(row>arr.length-1){
+        if (row > arr.length - 1) {
             return arr;
         }
-        bubblesortIteration(arr,0,0);
-        bubblesortMatrix(arr,row+1);
+        bubblesortIteration(arr, 0, 0);
+        bubblesortMatrix(arr, row + 1);
         return arr;
     }
 
@@ -1329,8 +1330,70 @@ public class Main {
         }
     }
 
+    private static void countMaxSubArray(int[] arr) {
+        int countBlocks = 0, countCurrentBlock = 0, countMaxBlock = 0;
+        for (int i = 0; i < arr.length - 1; i++) {
+            if (arr[i] == arr[i + 1]) {
+                countCurrentBlock++;
+            } else if (countCurrentBlock > 0) {
+                countCurrentBlock++;
+                countBlocks++;
+                if (countMaxBlock < countCurrentBlock) {
+                    countMaxBlock = countCurrentBlock;
+                }
+                countCurrentBlock = 0;
+            }
+        }
+
+        System.out.println("Най-дългата площадка е: " + countMaxBlock + "елемента. Брой на площадките: " + countBlocks);
+    }
+
+    private static void isSorted(int[] arr) {
+        for (int i = 0; i < arr.length - 1; i++) {
+            if (arr[i] > arr[i + 1]) {
+                System.out.println("Array is not sorted. on positions " + i + " and " + (i + 1));
+            }
+        }
+    }
+
+    private static int BinarySeach(int[] arr, int element, int start, int end) {
+        if (start > end) {
+            System.out.println("There is no such elemnt");
+            return -1;
+        }
+        int currentIndex = (start + end) / 2;
+        if (arr[currentIndex]<=element && arr[currentIndex+1]>=element) {
+            return currentIndex+1;
+        } else if (element < arr[currentIndex]) {
+            return BinarySeach(arr, element, start, currentIndex - 1);
+        } else {
+            return BinarySeach(arr, element, currentIndex + 1, end);
+        }
+    }
+
+    private static int [] addNewElement(int arr[],int element){
+        int [] arr2 = new int [arr.length+1];
+        int index = BinarySeach(arr,element,0,arr.length-1);
+        for(int i=0; i<arr.length;i++){
+            if(i<index){
+                arr2[i]=arr[i];
+            }else if(i==index){
+                arr2[index]=element;
+                arr2[index+1]=arr[i];
+            }else {
+                arr2[i+1]=arr[i];
+            }
+        }
+        return arr2;
+    }
+
+    private static void int [] addNewElementRecursively(int arr[],int element, int index){
+        if(index)
+    }
+
+
     public static void main(String[] args) {
-        int[][] matrix1 = {{10, 2, 30, 4}, {5, 60, 7, 9}, {90, 10, 11, 15}};
-        printArray(bubblesortMatrix(matrix1, 0));
+        int[] matrix1 = {1, 1, 3, 5, 7, 9, 11, 45};
+        System.out.println(Arrays.toString(addNewElement(matrix1, 8)));
     }
 }
