@@ -1,13 +1,5 @@
 package com.ittalents;
-
-import java.awt.image.AreaAveragingScaleFilter;
-import java.lang.ref.PhantomReference;
-import java.lang.reflect.Array;
-import java.sql.SQLSyntaxErrorException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.spi.AbstractResourceBundleProvider;
 
 public class Main {
 
@@ -1387,13 +1379,304 @@ public class Main {
         return arr2;
     }
 
-    private static void int [] addNewElementRecursively(int arr[],int element, int index){
-        if(index)
+    private static int [] addNewElementRecursively(int arr[],int element){
+        int [] arr2 = new int [arr.length+1];
+        int index = BinarySeach(arr,element,0,arr.length-1);
+        addNewElement(arr2,arr,element,index,0);
+        return arr2;
+    }
+
+    private static void addNewElement(int [] arr2, int [] arr,int element,int index, int currentIndex){
+        if(currentIndex==arr2.length){
+            return;
+        }
+        if(currentIndex<index){
+            arr2[currentIndex]=arr[currentIndex];
+        }else if(currentIndex==index){
+            arr2[index]=element;
+        }else {
+            arr2[currentIndex]=arr[currentIndex-1];
+        }
+        addNewElement(arr2,arr,element,index,currentIndex+1);
+    }
+
+    private static void reverseNumber(int number) {
+        if(number==0) return;
+        System.out.print(number % 10);
+        reverseNumber(number / 10);
+
+    }
+
+    private static void palindrom(int number){
+        int digits = digits(number,0);
+        if(checkDigits(number,digits,0)){
+            System.out.println("Number is palindrom");
+        }else {
+            System.out.println("Number is not palindrom");
+        }
+    }
+
+    private static int digits(int number,int count){
+        if(number==0)return count;
+        count++;
+        return digits(number/10,count);
+    }
+
+    private static boolean checkDigits(int number, int digits,int iteration){
+        if((digits/2)>=iteration){
+            if(((int)(number/Math.pow(10,(digits-1)))%10)!=(((int)(number/Math.pow(10,iteration)))%10)){
+                return false;
+            }
+        }else if((digits/2)<iteration) {
+            return true;
+        }
+        return checkDigits(number,digits-1,iteration+1);
+    }
+
+    private static int calculateNumberSum(int number,int sum){
+        if(number==0){
+            return sum;
+        }
+        return calculateNumberSum(number/10,sum+(number%10));
+    }
+
+    private static int factorial(int factorial){
+        if(factorial==0){
+            return 1;
+        }
+        return factorial*factorial(--factorial);
+    }
+
+    private static int nNumberOfFibonacci(int i){
+        if(i==0){
+            return 0;
+        }else if(i==1){
+            return 1;
+        }else{
+            return nNumberOfFibonacci(i - 1) + nNumberOfFibonacci(i - 2);
+        }
+    }
+
+    private static int nNumberOfFibonacciNotRecursively(int i){
+        int number1=0,number2=1,number=0;
+        for(int j=i; j>=2;j--){
+            number=number1+number2;
+            number1=number2;
+            number2=number;
+        }
+        return number;
+    }
+
+    private static void printArray(int arr[],int currentIndex){
+        if(currentIndex==arr.length){
+            return;
+        }
+        System.out.print(arr[currentIndex]);
+        printArray(arr,currentIndex+1);
+    }
+
+    private static void sumArray(int arr[],int sum,int currentIndex){
+        if(currentIndex==arr.length){
+            System.out.println(sum);
+            return;
+        }
+        sumArray(arr,sum+arr[currentIndex],currentIndex+1);
+    }
+
+    private static void findMinMaxArray(int arr[], int minElement, int maxElement,int currentIndex){
+        if(currentIndex==arr.length){
+            System.out.println("Min "+ minElement + " Max "+ maxElement);
+            return;
+        }
+        findMinMaxArray(arr,minElement>arr[currentIndex]? arr[currentIndex] : minElement,maxElement<arr[currentIndex]? arr[currentIndex] : maxElement,currentIndex+1);
+    }
+
+    private static int [] reverArrayRecursively(int arr[],int currentIndex){
+        if(currentIndex==(arr.length/2)){
+            return arr;
+        }
+
+        int temp = arr[currentIndex];
+        arr[currentIndex] = arr[arr.length-1-currentIndex];
+        arr[arr.length-1-currentIndex]=temp;
+        return reverArrayRecursively(arr,currentIndex+1);
+    }
+
+    private static void findMostDublicatedNumber(int arr[],int currentIndex,int maxOccurances, int number){
+        if(currentIndex==arr.length){
+            System.out.println("Maxoccurrences " + maxOccurances + " of element "+number);
+            return;
+        }
+
+        int tempmaxOccurances=occurencesOfSpecificNumber(arr,currentIndex+1,arr[currentIndex],1);
+
+        if(tempmaxOccurances>maxOccurances){
+            maxOccurances=tempmaxOccurances;
+            number=arr[currentIndex];
+        }
+
+        findMostDublicatedNumber(arr,++currentIndex,maxOccurances,number);
+    }
+
+    private static int occurencesOfSpecificNumber(int arr[],int currentindex,int number,int occurrences){
+        if(currentindex==arr.length){
+            return occurrences;
+        }
+
+        if(arr[currentindex]==number){
+            occurrences++;
+        }
+
+        return occurencesOfSpecificNumber(arr,++currentindex,number,occurrences);
+    }
+
+    private static void findNumberOfDublicationOfEachNumber(int arr[],int currentIndex){
+        if(currentIndex==arr.length){
+            return;
+        }
+
+
+        if(arr[currentIndex]!= Integer.MAX_VALUE){
+            int numberOccurances=occurencesOfNumber(arr,currentIndex+1,arr[currentIndex],1);
+            System.out.println("Occurances of number " + arr[currentIndex] + " is " + numberOccurances);
+        }
+
+
+
+        findNumberOfDublicationOfEachNumber(arr,++currentIndex);
+    }
+
+    private static int occurencesOfNumber(int arr[],int currentindex,int number,int occurrences){
+        if(currentindex==arr.length){
+            return occurrences;
+        }
+
+        if(arr[currentindex]==number && number != Integer.MAX_VALUE){
+            arr[currentindex]=Integer.MAX_VALUE;
+            occurrences++;
+        }
+
+        return occurencesOfNumber(arr,++currentindex,number,occurrences);
+    }
+
+    private static void findSumOfAllElements(int arr[],int currentIndex,int sum){
+        if(currentIndex==arr.length){
+            System.out.print("Sum is "+sum);
+            return;
+        }
+
+        findSumOfAllElements(arr,currentIndex+1,sum+=arr[currentIndex]);
+    }
+
+    private static void findAvarageValue(int arr[],int currentIndex,int sum){
+        if(currentIndex==arr.length){
+            System.out.print("Avarage is "+ (sum/arr.length));
+            return;
+        }
+
+        findAvarageValue(arr,currentIndex+1,sum+=arr[currentIndex]);
+    }
+
+    private static void findASpecificNumber(int arr[],int currentIndex,int number){
+        if(currentIndex==arr.length){
+            System.out.print("Number is not found.");
+            return;
+        }
+
+        if(arr[currentIndex]==number){
+            System.out.println("Index of " + number + " is "+currentIndex);
+            return;
+        }
+
+        findASpecificNumber(arr,currentIndex+1,number);
     }
 
 
+    private static void findSumOfAllElementsInMatrix(int arr[][],int sum, int currentRow, int currentColumnn){
+        if(currentRow==arr.length-1 && currentColumnn>=arr[currentRow].length){
+            System.out.println("Sum is "+sum);
+            return;
+        }
+
+        if(currentRow<arr.length-1 && currentColumnn==arr[currentRow].length){
+            currentRow++;
+            currentColumnn=0;
+        }
+        findSumOfAllElementsInMatrix(arr,sum+=arr[currentRow][currentColumnn],currentRow,currentColumnn+1);
+    }
+
+
+    private static void findAvarageElementInMatrix(int arr[][],int sum, int currentRow, int currentColumnn){
+        if(currentRow==arr.length-1 && currentColumnn>=arr[currentRow].length){
+            System.out.println("Sum is "+sum/(arr.length*arr[currentRow].length));
+            return;
+        }
+
+        if(currentRow<arr.length-1 && currentColumnn==arr[currentRow].length){
+            currentRow++;
+            currentColumnn=0;
+        }
+        findAvarageElementInMatrix(arr,sum+=arr[currentRow][currentColumnn],currentRow,currentColumnn+1);
+    }
+
+    private static void findElementsInMatrix(int arr[][],int number, int currentRow, int currentColumnn){
+        if(currentRow==arr.length-1 && currentColumnn>=arr[currentRow].length){
+            System.out.println("There is no such number");
+            return;
+        }
+
+        if(currentRow<arr.length-1 && currentColumnn==arr[currentRow].length){
+            currentRow++;
+            currentColumnn=0;
+        }
+        if(arr[currentRow][currentColumnn]==number){
+            System.out.println("Index of number " + arr[currentRow][currentColumnn] +  " is " + currentRow + " " + currentColumnn);
+            return;
+        }
+        findElementsInMatrix(arr,number,currentRow,currentColumnn+1);
+    }
+
+    private static int occurencesOfNumberInMatrix(int arr[][],int currentRow, int currentColumnn,int number,int occurrences){
+        if(currentRow==arr.length-1 && currentColumnn>=arr[currentRow].length){
+            return occurrences;
+        }
+
+        if(currentRow<arr.length-1 && currentColumnn==arr[currentRow].length){
+            currentRow++;
+            currentColumnn=0;
+        }
+
+        if(arr[currentRow][currentColumnn]==number && number != Integer.MAX_VALUE){
+            arr[currentRow][currentColumnn]=Integer.MAX_VALUE;
+            occurrences++;
+        }
+
+        return occurencesOfNumberInMatrix(arr,currentRow,++currentColumnn,number,occurrences);
+    }
+
+    private static void findNumberOfDublicationOfEachNumberInMatrix(int arr[][], int currentRow, int currentColumnn){
+        if(currentRow==arr.length-1 && currentColumnn>=arr[currentRow].length){
+            return;
+        }
+
+        if(currentRow<arr.length-1 && currentColumnn==arr[currentRow].length){
+            currentRow++;
+            currentColumnn=0;
+        }
+
+        if(arr[currentRow][currentColumnn]!= Integer.MAX_VALUE){
+            int numberOccurances=occurencesOfNumberInMatrix(arr,currentRow,currentColumnn+1,arr[currentRow][currentColumnn],1);
+            System.out.println("Occurances of number " + arr[currentRow][currentColumnn] + " is " + numberOccurances);
+        }
+
+        findNumberOfDublicationOfEachNumberInMatrix(arr,currentRow,currentColumnn+1);
+    }
+
+
+
     public static void main(String[] args) {
-        int[] matrix1 = {1, 1, 3, 5, 7, 9, 11, 45};
-        System.out.println(Arrays.toString(addNewElement(matrix1, 8)));
+        int[][] monthTemperature = {{1,2,3,3,3},{3,3,3,3,3},{3,4,2,2,2},{5,6,7,1,1}};
+        int[] monthTemperature1 = {1,2,3,3,3,3,3,3,3,3,3,4,2,2,2,5,6,7,1,1};
+        findNumberOfDublicationOfEachNumberInMatrix(monthTemperature,0,0);
     }
 }
